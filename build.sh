@@ -17,7 +17,6 @@ echo "RELEASE=$RELEASE" >> "$GITHUB_OUTPUT"
 echo "ARCH=$ARCH" >> "$GITHUB_OUTPUT"
 
 # install depedencies
-sudo apt update && sudo apt install -yq curl libarchive-tools
 curl -L -o /tmp/mmdebstrap.deb http://ftp.us.debian.org/debian/pool/main/m/mmdebstrap/mmdebstrap_1.5.7-3_all.deb
 sudo apt install -yq /tmp/mmdebstrap.deb
 curl -L -o /tmp/keyring.deb http://ftp.us.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2025.1_all.deb
@@ -40,8 +39,6 @@ cat <<-EOF | sudo unshare -mpf bash -e -
 sudo mount --bind /dev ./ubuntu/dev
 sudo mount --bind /proc ./ubuntu/proc
 sudo mount --bind /sys ./ubuntu/sys
-sudo mkdir -p ./ubuntu/etc/
-sudo echo 'nameserver 1.1.1.1' >> ./ubuntu/etc/resolv.conf
 
 sudo chroot ./ubuntu apt update
 sudo chroot ./ubuntu apt purge -yq --allow-remove-essential coreutils-from-uutils
