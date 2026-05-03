@@ -39,7 +39,7 @@ cat <<-EOF | sudo unshare -mpf bash -e -
 sudo mount --bind /dev ./ubuntu/dev
 sudo mount --bind /proc ./ubuntu/proc
 sudo mount --bind /sys ./ubuntu/sys
-sudo echo 'nameserver 1.1.1.1' >> ./ubuntu/etc/resolv.conf
+echo 'nameserver 1.1.1.1' | sudo tee -a ./ubuntu/etc/resolv.conf > /dev/null
 
 sudo chroot ./ubuntu apt update
 sudo chroot ./ubuntu apt purge -yq --allow-remove-essential coreutils-from-uutils
