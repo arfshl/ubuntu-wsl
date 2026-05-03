@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # export the env
-export RELEASE=resolute
+export RELEASE=questing
 ARCH=$(uname -m)
 case "$ARCH" in
     x86_64) ARCH=amd64 ;;
@@ -39,7 +39,7 @@ cat <<-EOF | sudo unshare -mpf bash -e -
 sudo mount --bind /dev ./ubuntu/dev
 sudo mount --bind /proc ./ubuntu/proc
 sudo mount --bind /sys ./ubuntu/sys
-sudo rm -f ubuntu/etc/resolv.conf
+sudo rm -f ./ubuntu/etc/resolv.conf
 sudo echo "nameserver 1.1.1.1" >> ./ubuntu/etc/resolv.conf
 
 sudo chroot ./ubuntu apt update
