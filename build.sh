@@ -28,6 +28,7 @@ dist_version="$RELEASE"
 
 sudo mmdebstrap \
 --arch=$ARCH \
+--variant="debootstrap"
 --components="main,universe,multiverse" \
 --include=locales,passwd,software-properties-common,ca-certificates,sudo,libpam-systemd,dbus,systemd,mesa-utils,systemd-sysv,adduser \
 --format=directory \
