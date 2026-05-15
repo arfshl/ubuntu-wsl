@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # export the env
-export RELEASE=questing
+export RELEASE=resolute
 ARCH=$(uname -m)
 case "$ARCH" in
     x86_64) ARCH=amd64 ;;
