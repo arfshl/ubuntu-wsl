@@ -42,12 +42,12 @@ sudo mount --bind /sys ./ubuntu/sys
 sudo rm -f ./ubuntu/etc/resolv.conf
 sudo echo "nameserver 1.1.1.1" >> ./ubuntu/etc/resolv.conf
 
-sudo chroot ./ubuntu apt update
-sudo chroot ./ubuntu apt purge -yq --allow-remove-essential coreutils-from-uutils
-sudo chroot ./ubuntu apt purge -yq --allow-remove-essential rust-coreutils
-sudo chroot ./ubuntu apt install -yq coreutils-from-gnu
-sudo chroot ./ubuntu apt install -yq gnu-coreutils
-sudo chroot ./ubuntu apt clean
+#sudo chroot ./ubuntu apt update
+#sudo chroot ./ubuntu apt purge -yq --allow-remove-essential coreutils-from-uutils
+#sudo chroot ./ubuntu apt purge -yq --allow-remove-essential rust-coreutils
+#sudo chroot ./ubuntu apt install -yq coreutils-from-gnu
+#sudo chroot ./ubuntu apt install -yq gnu-coreutils
+#sudo chroot ./ubuntu apt clean
 
 sudo chroot ./ubuntu sed -i 's/^# \(en_US.UTF-8\)/\1/' /etc/locale.gen
 sudo chroot ./ubuntu /bin/bash -c 'DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales'
