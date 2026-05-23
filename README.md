@@ -1,18 +1,20 @@
-# Ubuntu latest WSL
-Ubuntu latest on WSL, including non-lts release
+# Ubuntu WSL
+Ubuntu on WSL, including non-lts release
 
-[![Build](https://github.com/arfshl/ubuntu-latest-wsl/actions/workflows/build.yml/badge.svg)](https://github.com/arfshl/ubuntu-latest-wsl/actions/workflows/build.yml)
+Based on [Official Ubuntu docker image](https://hub.docker.com/_/ubuntu/)
 
-![screenshot](https://github.com/arfshl/ubuntu-latest-wsl/raw/main/screenshot.png)
+[![Build](https://github.com/arfshl/ubuntu-wsl/actions/workflows/build.yml/badge.svg)](https://github.com/arfshl/ubuntu-wsl/actions/workflows/build.yml)
 
-### [Download](https://github.com/arfshl/ubuntu-latest-wsl/releases)
+![screenshot](https://github.com/arfshl/ubuntu-wsl/raw/main/screenshot.png)
+
+### [Download](https://github.com/arfshl/ubuntu-wsl/releases)
 
 ## Requirements
 * x86_64 or aarch64 based processors
 * Windows Subsystem for Linux feature is enabled.
 
 ## Install
-#### 1. [Download here](https://github.com/arfshl/ubuntu-latest-wsl/releases)
+#### 1. [Download here](https://github.com/arfshl/ubuntu-wsl/releases)
 
 #### 2. Double-click the .wsl file to install it with default name
 

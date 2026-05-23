@@ -15,12 +15,12 @@ esac
 echo "ARCH=$ARCH" >> "$GITHUB_OUTPUT"
 
 # Fetch image manifest
-manifest=$(docker manifest inspect ubuntu:rolling)
+manifest=$(docker manifest inspect ubuntu:latest)
 # Fetch image digest
 digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$ARCH\") | .digest")
 # Pull and Export image
-docker pull "ubuntu:rolling@${digest}"
-docker export $(docker create "ubuntu:rolling@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu.tar.xz"
+docker pull "ubuntu:latest@${digest}"
+docker export $(docker create "ubuntu:latest@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu.tar.xz"
 
 # start build
 mkdir -p ./ubuntu
