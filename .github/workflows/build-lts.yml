@@ -60,6 +60,8 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
+        with:
+            merge-multiple: true
 
       - name: Release LTS
         uses: softprops/action-gh-release@v3
