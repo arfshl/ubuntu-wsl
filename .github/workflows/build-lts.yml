@@ -8,7 +8,7 @@ on:
     branches:
       - 'main'
     paths:
-      - "build.sh"
+      - "build-lts.sh"
       - ".github/workflows/*.yml"
       - "wslconf/*"
 
@@ -27,14 +27,14 @@ jobs:
           fetch-depth: 0
       - id: start_build
         run: |
-          bash build.sh
+          bash build-lts.sh
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: amd64
           archive: false
           path: |
-             ubuntu-latest-amd64.wsl
+             ubuntu-lts-amd64.wsl
 
   build-arm64:
     runs-on: ubuntu-24.04-arm
@@ -45,36 +45,32 @@ jobs:
           fetch-depth: 0
       - id: start_build
         run: |
-          bash build.sh
+          bash build-lts.sh
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: arm64
           archive: false
           path: |
-             ubuntu-latest-arm64.wsl
-
-
-  release:
+             ubuntu-lts-arm64.wsl
+    
+  release-lts:
     runs-on: ubuntu-latest
     needs: [build-amd64, build-arm64]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
-        with:
-          merge-multiple: true
 
-      - name: Release latest
+      - name: Release LTS
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: latest
-          name: Release latest
+          tag_name: lts
+          name: Release LTS
           files: |
-            ubuntu-latest-amd64.wsl
-            ubuntu-latest-arm64.wsl
+            ubuntu-lts-amd64.wsl
+            ubuntu-lts-arm64.wsl
           preserve_order: true
           make_latest: true
-    
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
