@@ -83,7 +83,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: lts
-          name: Release-LTS
+          name: Release LTS
           files: |
             ubuntu-lts-amd64.wsl
             ubuntu-lts-arm64.wsl
