@@ -62,5 +62,5 @@ cd ./ubuntu
 sudo tar --numeric-owner --absolute-names -c  * | gzip --best > ../install.tar.gz
 mv ../install.tar.gz ../ubuntu-latest-$ARCH.wsl
 
-sudo rm -rf ./ubuntu
-sudo rm ubuntu.tar.xz
+sudo rm -rf $GITHUB_WORKSPACE/ubuntu
+sudo rm $GITHUB_WORKSPACE/ubuntu.tar.xz
