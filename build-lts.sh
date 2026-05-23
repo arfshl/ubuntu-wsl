@@ -61,3 +61,6 @@ sudo cp ./wslconf/icon.ico ./ubuntu/usr/lib/wsl/icon.ico
 cd ./ubuntu
 sudo tar --numeric-owner --absolute-names -c  * | gzip --best > ../install.tar.gz
 mv ../install.tar.gz ../ubuntu-latest-$ARCH.wsl
+
+sudo rm -rf ./ubuntu
+sudo rm ubuntu.tar.xz
