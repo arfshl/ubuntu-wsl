@@ -9,7 +9,7 @@ on:
       - 'main'
     paths:
       - "build-lts.sh"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/build-lts.yml"
       - "wslconf/*"
 
 permissions:

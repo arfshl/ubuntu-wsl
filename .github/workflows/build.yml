@@ -9,7 +9,7 @@ on:
       - 'main'
     paths:
       - "build.sh"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/build.yml"
       - "wslconf/*"
 
 permissions:
