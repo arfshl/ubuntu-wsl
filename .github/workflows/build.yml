@@ -1,4 +1,4 @@
-name: "Build latest"
+name: "Build"
 
 on:
   workflow_dispatch:
@@ -67,8 +67,8 @@ jobs:
       - name: Release latest
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: latest
-          name: Release latest
+          tag_name: ${{ needs.build-amd64.outputs.RELEASE }}
+          name: Release ${{ needs.build-amd64.outputs.RELEASE }}
           files: |
             ubuntu-latest-amd64.wsl
             ubuntu-latest-arm64.wsl

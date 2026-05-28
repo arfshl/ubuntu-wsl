@@ -1,8 +1,6 @@
 # Ubuntu WSL
 Ubuntu on WSL, including non-lts release
 
-Based on [Official Ubuntu docker image](https://hub.docker.com/_/ubuntu/)
-
 [![Build](https://github.com/arfshl/ubuntu-wsl/actions/workflows/build.yml/badge.svg)](https://github.com/arfshl/ubuntu-wsl/actions/workflows/build.yml)
 
 ![screenshot](https://github.com/arfshl/ubuntu-wsl/raw/main/screenshot.png)
