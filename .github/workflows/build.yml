@@ -8,7 +8,7 @@ on:
     branches:
       - 'main'
     paths:
-      - "build.sh"
+      - "build*.sh"
       - ".github/workflows/build.yml"
       - "wslconf/*"
 
@@ -36,6 +36,27 @@ jobs:
           path: |
              ubuntu-latest-amd64.wsl
 
+
+  build-amd64-minimal:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE: ${{ steps.start_build.outputs.RELEASE }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - id: start_build
+        run: |
+          bash build-minimal.sh
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: amd64-minimal
+          archive: false
+          path: |
+             ubuntu-minimal-latest-amd64.wsl
+
   build-arm64:
     runs-on: ubuntu-24.04-arm
     steps:
@@ -55,9 +76,28 @@ jobs:
              ubuntu-latest-arm64.wsl
 
 
+  build-arm64-minimal:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - id: start_build
+        run: |
+          bash build.sh
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: arm64-minimal
+          archive: false
+          path: |
+             ubuntu-minimal-latest-arm64.wsl
+
+
   release:
     runs-on: ubuntu-latest
-    needs: [build-amd64, build-arm64]
+    needs: [build-amd64, build-arm64, build-amd64-minimal, build-arm64-minimal]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
@@ -72,6 +112,8 @@ jobs:
           files: |
             ubuntu-latest-amd64.wsl
             ubuntu-latest-arm64.wsl
+            ubuntu-minimal-latest-amd64.wsl
+            ubuntu-minimal-latest-arm64.wsl
           preserve_order: true
           make_latest: true
     

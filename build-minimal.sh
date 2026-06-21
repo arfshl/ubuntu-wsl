@@ -28,7 +28,7 @@ sudo mmdebstrap \
 --arch=$ARCH \
 --variant="debootstrap" \
 --components="main,universe,multiverse" \
---include=locales,passwd,software-properties-common,ca-certificates,sudo,libpam-systemd,dbus,systemd,mesa-utils,systemd-sysv,adduser \
+--include=locales,passwd,software-properties-common,ca-certificates,sudo,adduser \
 --format=directory \
 ${dist_version} \
 ubuntu \
@@ -41,13 +41,18 @@ sudo mount --bind /sys ./ubuntu/sys
 sudo rm -f ./ubuntu/etc/resolv.conf
 sudo echo "nameserver 1.1.1.1" >> ./ubuntu/etc/resolv.conf
 
-#sudo chroot ./ubuntu apt update
-#sudo chroot ./ubuntu apt purge -yq --allow-remove-essential coreutils-from-uutils
-#sudo chroot ./ubuntu apt purge -yq --allow-remove-essential rust-coreutils
-#sudo chroot ./ubuntu apt install -yq coreutils-from-gnu
-#sudo chroot ./ubuntu apt install -yq gnu-coreutils
-#sudo chroot ./ubuntu apt clean
+# replace uutils with gnu coreutils
+sudo chroot ./ubuntu apt update
+sudo chroot ./ubuntu apt purge -yq --allow-remove-essential coreutils-from-uutils
+sudo chroot ./ubuntu apt purge -yq --allow-remove-essential rust-coreutils
+sudo chroot ./ubuntu apt install -yq coreutils-from-gnu
+sudo chroot ./ubuntu apt install -yq gnu-coreutils
+sudo chroot ./ubuntu apt clean
 
+# replace sudo-rs with sudo
+sudo update-alternatives --set sudo /usr/bin/sudo.ws
+
+# locale generate
 sudo chroot ./ubuntu sed -i 's/^# \(en_US.UTF-8\)/\1/' /etc/locale.gen
 sudo chroot ./ubuntu /bin/bash -c 'DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales'
 
@@ -68,4 +73,4 @@ sudo cp ./wslconf/icon.ico ./ubuntu/usr/lib/wsl/icon.ico
 
 cd ./ubuntu
 sudo tar --numeric-owner --absolute-names -c  * | gzip --best > ../install.tar.gz
-mv ../install.tar.gz ../ubuntu-latest-$ARCH.wsl
+mv ../install.tar.gz ../ubuntu-minimal-latest-$ARCH.wsl
