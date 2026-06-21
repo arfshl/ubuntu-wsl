@@ -36,14 +36,14 @@ http://archive.ubuntu.com/ubuntu
 
 cat <<-EOF | unshare -mpf bash -e -
 
-# replace sudo-rs with sudo
-update-alternatives --set sudo /usr/bin/sudo.ws
-
 sudo mount --bind /dev ./ubuntu/dev
 sudo mount --bind /proc ./ubuntu/proc
 sudo mount --bind /sys ./ubuntu/sys
 sudo rm -f ./ubuntu/etc/resolv.conf
 sudo echo "nameserver 1.1.1.1" >> ./ubuntu/etc/resolv.conf
+
+# replace sudo-rs with sudo
+update-alternatives --set sudo /usr/bin/sudo.ws
 
 # replace uutils with gnu coreutils
 sudo chroot ./ubuntu apt update
