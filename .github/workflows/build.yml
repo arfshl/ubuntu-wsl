@@ -85,7 +85,7 @@ jobs:
           fetch-depth: 0
       - id: start_build
         run: |
-          bash build.sh
+          bash build-minimal.sh
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
