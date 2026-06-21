@@ -36,27 +36,6 @@ jobs:
           path: |
              ubuntu-latest-amd64.wsl
 
-
-  build-amd64-minimal:
-    runs-on: ubuntu-latest
-    outputs:
-      RELEASE: ${{ steps.start_build.outputs.RELEASE }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - id: start_build
-        run: |
-          bash build-minimal.sh
-      - name: Upload artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: amd64-minimal
-          archive: false
-          path: |
-             ubuntu-minimal-latest-amd64.wsl
-
   build-arm64:
     runs-on: ubuntu-24.04-arm
     steps:
@@ -74,25 +53,6 @@ jobs:
           archive: false
           path: |
              ubuntu-latest-arm64.wsl
-
-
-  build-arm64-minimal:
-    runs-on: ubuntu-24.04-arm
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - id: start_build
-        run: |
-          bash build-minimal.sh
-      - name: Upload artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: arm64-minimal
-          archive: false
-          path: |
-             ubuntu-minimal-latest-arm64.wsl
 
 
   release:
