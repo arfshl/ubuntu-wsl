@@ -34,7 +34,11 @@ ${dist_version} \
 ubuntu \
 http://archive.ubuntu.com/ubuntu
 
-cat <<-EOF | sudo unshare -mpf bash -e -
+cat <<-EOF | unshare -mpf bash -e -
+
+# replace sudo-rs with sudo
+update-alternatives --set sudo /usr/bin/sudo.ws
+
 sudo mount --bind /dev ./ubuntu/dev
 sudo mount --bind /proc ./ubuntu/proc
 sudo mount --bind /sys ./ubuntu/sys
@@ -48,9 +52,6 @@ sudo chroot ./ubuntu apt purge -yq --allow-remove-essential rust-coreutils
 sudo chroot ./ubuntu apt install -yq coreutils-from-gnu
 sudo chroot ./ubuntu apt install -yq gnu-coreutils
 sudo chroot ./ubuntu apt clean
-
-# replace sudo-rs with sudo
-sudo update-alternatives --set sudo /usr/bin/sudo.ws
 
 # locale generate
 sudo chroot ./ubuntu sed -i 's/^# \(en_US.UTF-8\)/\1/' /etc/locale.gen
