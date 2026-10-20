@@ -4,35 +4,55 @@
 export RELEASE=$(curl -s https://changelogs.ubuntu.com/meta-release | grep "Dist:" | tail -n 1 | cut -d' ' -f2)
 ARCH=$(uname -m)
 case "$ARCH" in
-    x86_64) ARCH=amd64 ;;
-    amd64) ARCH=amd64 ;;
-    aarch64) ARCH=arm64 ;;
-    arm64) ARCH=arm64 ;;
+    x86_64|amd64) 
+        ARCH=amd64
+        MIRROR="http://archive.ubuntu.com/ubuntu"
+        ;;
+    aarch64|arm64) 
+        ARCH=arm64
+        MIRROR="http://ports.ubuntu.com/ubuntu-ports"
+        ;;
     *)
         echo "Unsupported architecture: $ARCH"
         exit 1
         ;;
 esac
+
 echo "RELEASE=$RELEASE" >> "$GITHUB_OUTPUT"
 echo "ARCH=$ARCH" >> "$GITHUB_OUTPUT"
 
 # install depedencies
 sudo apt install -yq mmdebstrap
-curl -L -o /tmp/keyring.deb http://ftp.us.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2025.1_all.deb
-sudo apt install -yq /tmp/keyring.deb
 
 # start build with mmdebstrap and sprays some WD-40 to get rid of rust on coreutils
-dist_version="$RELEASE"
-
 sudo mmdebstrap \
 --arch=$ARCH \
 --variant="debootstrap" \
 --components="main,universe,multiverse" \
---include=locales,passwd,software-properties-common,ca-certificates,sudo,libpam-systemd,dbus,systemd,mesa-utils,systemd-sysv,adduser,dbus-user-session,xauth,libgl1,libglx-mesa0 \
 --format=directory \
-${dist_version} \
+${RELEASE} \
 ubuntu \
-http://archive.ubuntu.com/ubuntu
+${MIRROR} \
+--include=\
+locales,\
+passwd,\
+software-properties-common,\
+ca-certificates,\
+sudo,\
+libpam-systemd,\
+dbus,\
+systemd,\
+mesa-utils,\
+systemd-sysv,\
+adduser,\
+dbus-user-session,\
+xauth,\
+libgl1,\
+libglx-mesa0,\
+update-manager-core,\
+wget,\
+curl,\
+nano,\
 
 cat <<-EOF | sudo unshare -mpf bash -e -
 sudo mount --bind /dev ./ubuntu/dev
@@ -41,6 +61,7 @@ sudo mount --bind /sys ./ubuntu/sys
 sudo rm -f ./ubuntu/etc/resolv.conf
 sudo echo "nameserver 1.1.1.1" >> ./ubuntu/etc/resolv.conf
 
+#De-rustification (disabled)
 #sudo chroot ./ubuntu apt update
 #sudo chroot ./ubuntu apt purge -yq --allow-remove-essential coreutils-from-uutils
 #sudo chroot ./ubuntu apt purge -yq --allow-remove-essential rust-coreutils
