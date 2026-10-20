@@ -28,7 +28,7 @@ sudo apt install -yq mmdebstrap
 sudo mmdebstrap \
 --arch=$ARCH \
 --variant="debootstrap" \
---components="main,universe,multiverse" \
+--components="main,universe,multiverse,restricted" \
 --format=directory \
 ${RELEASE} \
 ubuntu \
